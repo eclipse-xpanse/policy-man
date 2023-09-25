@@ -17,35 +17,27 @@ import (
 	"github.com/open-policy-agent/opa/rego"
 	"net/http"
 	"runtime/debug"
+	"strings"
 )
 
 type EvalRego struct {
-	Policy  string `json:"policy" binding:"required"`
-	IsAllow bool   `json:"isAllow" binding:"required"`
+	Policy string `json:"policy" binding:"required"`
 }
 
 type EvalCmd struct {
-	Rego  EvalRego `json:"rego" binding:"required"`
-	Input string   `json:"input" binding:"required"`
+	Policy string `json:"policy" binding:"required"`
+	Input  string `json:"input" binding:"required"`
 }
 
 type EvalCmdList struct {
-	Input    string     `json:"input" binding:"required"`
-	RegoList []EvalRego `json:"rego_list" binding:"required"`
+	Input      string   `json:"input" binding:"required"`
+	PolicyList []string `json:"policy_list" binding:"required"`
 }
 
-func abortWithError(c *gin.Context, code int, message string) {
-	c.AbortWithStatusJSON(code, gin.H{
-		"code":    code,
-		"message": message,
-	})
-}
-
-func healthHandler(c *gin.Context) {
-	c.JSON(200, gin.H{
-		"healthStatus": "OK",
-	})
-	return
+type EvalResult struct {
+	Input        string `json:"input,omitempty"`
+	Policy       string `json:"policy,omitempty"`
+	IsSuccessful bool   `json:"isSuccessful"`
 }
 
 func policiesEvaluateHandler(_ *config.Conf) gin.HandlerFunc {
@@ -59,21 +51,24 @@ func policiesEvaluateHandler(_ *config.Conf) gin.HandlerFunc {
 			return
 		}
 
-		for _, rego := range cmdList.RegoList {
-			decision, err := policyQuery(rego.Policy, rego.IsAllow, cmdList.Input)
+		for _, policy := range cmdList.PolicyList {
+			decision, err := policyQuery(policy, cmdList.Input)
 			if err != nil {
 				abortWithError(c, 500, err.Error())
 				return
 			}
-			if rego.IsAllow && !decision || !rego.IsAllow && decision {
-				c.JSON(200, gin.H{
-					"isSuccessful": false,
+			if !decision {
+				c.JSON(200, EvalResult{
+					IsSuccessful: false,
+					Policy:       policy,
+					Input:        cmdList.Input,
 				})
+				return
 			}
 		}
 
-		c.JSON(200, gin.H{
-			"isSuccessful": true,
+		c.JSON(200, EvalResult{
+			IsSuccessful: true,
 		})
 		return
 	}
@@ -90,31 +85,50 @@ func policyEvaluateHandler(_ *config.Conf) gin.HandlerFunc {
 			return
 		}
 
-		decision, err := policyQuery(cmd.Rego.Policy, cmd.Rego.IsAllow, cmd.Input)
+		decision, err := policyQuery(cmd.Policy, cmd.Input)
 		if err != nil {
 			abortWithError(c, 500, err.Error())
 			return
 		}
 
-		c.JSON(200, gin.H{
-			"isAllow":      cmd.Rego.IsAllow,
-			"isSuccessful": decision,
+		c.JSON(200, EvalResult{
+			IsSuccessful: decision,
 		})
 		return
 	}
 }
 
-func policyQuery(policyRego string, isAllow bool, input interface{}) (decision bool, err error) {
+func policyQuery(policyRego string, input interface{}) (decision bool, err error) {
 
-	policyRegoEx := fmt.Sprintf("package example.auth\n\n%v", policyRego)
-	var policyQuery string
-	if isAllow {
-		policyQuery = fmt.Sprintf("data.example.auth.allow")
-	} else {
-		policyQuery = fmt.Sprintf("data.example.auth.deny")
+	policyRegoFixed := removePackageAtTheBeginning(policyRego)
+	policyRegoEx := fmt.Sprintf("package policyman.auth\n\n%v", policyRegoFixed)
+	policyQuery := fmt.Sprintf("data.policyman.auth")
+	return policyEval(policyRegoEx, policyQuery, input)
+}
+
+func removePackageAtTheBeginning(input string) string {
+	lines := strings.Split(input, "\n")
+	var outputLines []string
+
+	for _, line := range lines {
+		// Strip the spaces
+		line = strings.TrimSpace(line)
+
+		// Skip the blank lines and the lines starts with `#`
+		if len(line) == 0 || strings.HasPrefix(line, "#") {
+			continue
+		}
+
+		// Remove the line start with "package"
+		if len(outputLines) == 0 && strings.HasPrefix(line, "package") {
+			continue
+		}
+
+		outputLines = append(outputLines, line)
 	}
 
-	return policyEval(policyRegoEx, policyQuery, input)
+	result := strings.Join(outputLines, "\n")
+	return result
 }
 
 func policyEval(policyRego string, policyQuery string, input interface{}) (decision bool, err error) {
@@ -154,10 +168,22 @@ func policyEval(policyRego string, policyQuery string, input interface{}) (decis
 	} else if len(results) == 0 {
 		return false, nil
 	} else {
-		decision, ok := results[0].Bindings["result"].(bool)
-		if !ok || !decision {
+		result, ok := results[0].Bindings["result"].(map[string]any)
+		if !ok {
 			return false, nil
 		}
-		return decision, nil
+		if allow, ok := result["allow"]; ok {
+			if allowBool, ok := allow.(bool); ok && !allowBool {
+				return false, nil
+			}
+		}
+		if deny, ok := result["deny"]; ok {
+			if denyBool, ok := deny.(bool); ok && denyBool {
+				return false, nil
+			}
+		}
+
 	}
+
+	return true, nil
 }
