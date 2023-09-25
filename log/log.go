@@ -33,12 +33,12 @@ func InitLog(level, path string) error {
 		basic.SetFormatter(&logrus.JSONFormatter{})
 	} else {
 		basic.Formatter = &logrus.TextFormatter{
-			TimestampFormat: "2023/01/01 - 01:01:01",
+			TimestampFormat: "2006/01/02 - 15:04:05",
 			FullTimestamp:   true,
 		}
 
 		basic.Formatter = &logrus.TextFormatter{
-			TimestampFormat: "2023/01/01 - 01:01:01",
+			TimestampFormat: "2006/01/02 - 15:04:05",
 			FullTimestamp:   true,
 		}
 	}
