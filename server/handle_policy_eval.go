@@ -20,21 +20,21 @@ import (
 	"strings"
 )
 
-type EvalRego struct {
+type evalRego struct {
 	Policy string `json:"policy" binding:"required"`
 }
 
-type EvalCmd struct {
+type evalCmd struct {
 	Policy string `json:"policy" binding:"required"`
 	Input  string `json:"input" binding:"required"`
 }
 
-type EvalCmdList struct {
+type evalCmdList struct {
 	Input      string   `json:"input" binding:"required"`
 	PolicyList []string `json:"policy_list" binding:"required"`
 }
 
-type EvalResult struct {
+type evalResult struct {
 	Input        string `json:"input,omitempty"`
 	Policy       string `json:"policy,omitempty"`
 	IsSuccessful bool   `json:"isSuccessful"`
@@ -43,7 +43,7 @@ type EvalResult struct {
 func policiesEvaluateHandler(_ *config.Conf) gin.HandlerFunc {
 	return func(c *gin.Context) {
 
-		var cmdList EvalCmdList
+		var cmdList evalCmdList
 
 		if err := c.ShouldBindWith(&cmdList, binding.JSON); err != nil {
 			log.Debug(err)
@@ -58,7 +58,7 @@ func policiesEvaluateHandler(_ *config.Conf) gin.HandlerFunc {
 				return
 			}
 			if !decision {
-				c.JSON(200, EvalResult{
+				c.JSON(200, evalResult{
 					IsSuccessful: false,
 					Policy:       policy,
 					Input:        cmdList.Input,
@@ -67,7 +67,7 @@ func policiesEvaluateHandler(_ *config.Conf) gin.HandlerFunc {
 			}
 		}
 
-		c.JSON(200, EvalResult{
+		c.JSON(200, evalResult{
 			IsSuccessful: true,
 		})
 		return
@@ -77,7 +77,7 @@ func policiesEvaluateHandler(_ *config.Conf) gin.HandlerFunc {
 func policyEvaluateHandler(_ *config.Conf) gin.HandlerFunc {
 	return func(c *gin.Context) {
 
-		var cmd EvalCmd
+		var cmd evalCmd
 
 		if err := c.ShouldBindWith(&cmd, binding.JSON); err != nil {
 			log.Debug(err)
@@ -91,7 +91,7 @@ func policyEvaluateHandler(_ *config.Conf) gin.HandlerFunc {
 			return
 		}
 
-		c.JSON(200, EvalResult{
+		c.JSON(200, evalResult{
 			IsSuccessful: decision,
 		})
 		return

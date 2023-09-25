@@ -5,21 +5,22 @@
 
 package server
 
-import "github.com/gin-gonic/gin"
-
-type HealthStatus string
-
-const (
-	healthOk HealthStatus = "OK"
+import (
+	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
-type HealthStatusResponse struct {
-	HealthStatus HealthStatus `json:"healthStatus"`
+type healthStatus string
+
+const (
+	healthOK  healthStatus = "OK"
+	healthNOK healthStatus = "NOK"
+)
+
+type systemStatus struct {
+	HealthStatus healthStatus `json:"healthStatus"`
 }
 
 func healthHandler(c *gin.Context) {
-	c.JSON(200, HealthStatusResponse{
-		HealthStatus: healthOk,
-	})
-	return
+	c.JSON(http.StatusOK, systemStatus{HealthStatus: healthOK})
 }
