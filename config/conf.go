@@ -22,17 +22,17 @@ type Conf struct {
 
 	ShutdownTimeout int64 `mapstructure:"shutdown_timeout"`
 
-	Log SectionLog `mapstructure:"log"`
+	Log sectionLog `mapstructure:"log"`
 
-	SSL SectionSSL `mapstructure:"ssl"`
+	SSL sectionSSL `mapstructure:"ssl"`
 }
 
-type SectionLog struct {
+type sectionLog struct {
 	Level string `mapstructure:"level"`
 	Path  string `mapstructure:"path"`
 }
 
-type SectionSSL struct {
+type sectionSSL struct {
 	Enable     bool   `mapstructure:"ssl"`
 	KeyPath    string `mapstructure:"key_path"`
 	CertPath   string `mapstructure:"cert_path"`
@@ -43,7 +43,7 @@ type SectionSSL struct {
 var defaultConf = []byte(`
 mode: release
 host: "localhost" # ip address to bind (default: any)
-port: "8080" # ignore this port number if auto_tls is enabled (listen 443).
+port: "9443" # ignore this port number if auto_tls is enabled (listen 443).
 shutdown_timeout: 30 # default is 30 second
 
 log:
@@ -59,7 +59,7 @@ func LoadConf() (*Conf, error) {
 	}
 
 	conf := &Conf{
-		Log: SectionLog{},
+		Log: sectionLog{},
 	}
 
 	viper.SetConfigType("yaml")

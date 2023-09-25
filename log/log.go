@@ -12,6 +12,8 @@ import (
 	"os"
 )
 
+const dateFormatLayout = "2006/01/02 - 15:04:05"
+
 var isTerm bool
 
 // nolint
@@ -33,12 +35,12 @@ func InitLog(level, path string) error {
 		basic.SetFormatter(&logrus.JSONFormatter{})
 	} else {
 		basic.Formatter = &logrus.TextFormatter{
-			TimestampFormat: "2006/01/02 - 15:04:05",
+			TimestampFormat: dateFormatLayout,
 			FullTimestamp:   true,
 		}
 
 		basic.Formatter = &logrus.TextFormatter{
-			TimestampFormat: "2006/01/02 - 15:04:05",
+			TimestampFormat: dateFormatLayout,
 			FullTimestamp:   true,
 		}
 	}

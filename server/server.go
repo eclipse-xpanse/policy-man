@@ -25,7 +25,7 @@ func RunHTTPServer(ctx context.Context, cfg *config.Conf) error {
 		Handler: router(cfg),
 	}
 
-	log.Info("HTTP server is running on" + cfg.Host + ":" + cfg.Port)
+	log.Info("HTTP server is running on " + cfg.Host + ":" + cfg.Port)
 	if cfg.SSL.Enable {
 		tlsConfig := &tls.Config{
 			MinVersion: tls.VersionTLS10,
