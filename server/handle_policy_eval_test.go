@@ -3,9 +3,10 @@
  * SPDX-FileCopyrightText: Huawei Inc.
  */
 
-package server
+package server_test
 
 import (
+	"github.com/eclipse-xpanse/policy-man/server"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -39,7 +40,7 @@ is_admin if "admin" in input.subject.groups
 		},
 	}
 
-	decision, err := policyEval(rego, query, input)
+	decision, err := server.PolicyEval(rego, query, input)
 	assert.Nil(t, err)
 	assert.Equal(t, true, decision)
 
