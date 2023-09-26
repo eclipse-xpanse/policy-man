@@ -3,6 +3,7 @@ EXECUTABLE := policy-man
 
 GO ?= go
 GOFMT ?= gofmt -l -d -w -s
+GOLINT ?= golangci-lint run
 
 TARGETS ?= linux darwin windows
 ARCHS ?= amd64
@@ -31,6 +32,9 @@ test:
 
 fmt:
 	$(GOFMT) ./
+
+lint:
+	$(GOLINT) ./
 
 clean:
 	$(GO) clean -modcache -x -i ./...

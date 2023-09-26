@@ -97,7 +97,7 @@ func policyQuery(policyRego string, input interface{}) (decision bool, err error
 	policyRegoFixed := removePackageAtTheBeginning(policyRego)
 	policyRegoEx := fmt.Sprintf("package policyman.auth\n\n%v", policyRegoFixed)
 	policyQuery := "data.policyman.auth"
-	return policyEval(policyRegoEx, policyQuery, input)
+	return PolicyEval(policyRegoEx, policyQuery, input)
 }
 
 func removePackageAtTheBeginning(input string) string {
@@ -125,7 +125,7 @@ func removePackageAtTheBeginning(input string) string {
 	return result
 }
 
-func policyEval(policyRego string, policyQuery string, input interface{}) (decision bool, err error) {
+func PolicyEval(policyRego string, policyQuery string, input interface{}) (decision bool, err error) {
 
 	defer func() {
 		if r := recover(); r != nil {
@@ -141,7 +141,7 @@ func policyEval(policyRego string, policyQuery string, input interface{}) (decis
 		rego.Module("policy-man.rego", policyRego),
 	).PrepareForEval(ctx)
 	if err != nil {
-		return false, errors.New("prepare for eval failed")
+		return false, fmt.Errorf("prepare for rego failed as fllow:\n %v", err)
 	}
 
 	var inputMap map[string]interface{}
