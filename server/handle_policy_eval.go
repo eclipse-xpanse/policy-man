@@ -20,10 +20,6 @@ import (
 	"strings"
 )
 
-type evalRego struct {
-	Policy string `json:"policy" binding:"required"`
-}
-
 type evalCmd struct {
 	Policy string `json:"policy" binding:"required"`
 	Input  string `json:"input" binding:"required"`
@@ -70,7 +66,6 @@ func policiesEvaluateHandler(_ *config.Conf) gin.HandlerFunc {
 		c.JSON(200, evalResult{
 			IsSuccessful: true,
 		})
-		return
 	}
 }
 
@@ -94,7 +89,6 @@ func policyEvaluateHandler(_ *config.Conf) gin.HandlerFunc {
 		c.JSON(200, evalResult{
 			IsSuccessful: decision,
 		})
-		return
 	}
 }
 
@@ -102,7 +96,7 @@ func policyQuery(policyRego string, input interface{}) (decision bool, err error
 
 	policyRegoFixed := removePackageAtTheBeginning(policyRego)
 	policyRegoEx := fmt.Sprintf("package policyman.auth\n\n%v", policyRegoFixed)
-	policyQuery := fmt.Sprintf("data.policyman.auth")
+	policyQuery := "data.policyman.auth"
 	return policyEval(policyRegoEx, policyQuery, input)
 }
 
