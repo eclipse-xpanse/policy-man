@@ -28,7 +28,8 @@ func main() {
 	go func() {
 		err := server.RunHTTPServer(ctx, cfg)
 		if err != nil {
-
+			log.Errorf("run http server failed: %v", err)
+			return
 		}
 	}()
 

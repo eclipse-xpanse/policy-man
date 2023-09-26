@@ -28,7 +28,7 @@ allow if is_admin
 
 is_admin if "admin" in input.subject.groups
 `
-	query := "data.example.auth.allow"
+	query := "data.example.auth"
 
 	input := map[string]interface{}{
 		"method": "GET",
