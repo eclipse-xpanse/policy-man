@@ -2,8 +2,6 @@ module github.com/eclipse-xpanse/policy-man
 
 go 1.21
 
-toolchain go1.21.1
-
 require (
 	github.com/gin-contrib/logger v0.2.6
 	github.com/gin-gonic/gin v1.9.1
