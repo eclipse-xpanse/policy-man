@@ -12,8 +12,11 @@ import (
 	"errors"
 	"github.com/eclipse-xpanse/policy-man/config"
 	"github.com/eclipse-xpanse/policy-man/log"
+	_ "github.com/eclipse-xpanse/policy-man/openapi/docs"
 	"github.com/gin-contrib/logger"
 	"github.com/gin-gonic/gin"
+	"github.com/swaggo/files"
+	"github.com/swaggo/gin-swagger"
 	"golang.org/x/sync/errgroup"
 	"net/http"
 	"time"
@@ -123,11 +126,10 @@ func router(cfg *config.Conf) *gin.Engine {
 		logger.WithUTC(true),
 		logger.WithSkipPath([]string{}),
 	))
-
+	r.GET("/health", healthHandler)
 	r.POST("/evaluate/policy", policyEvaluateHandler(cfg))
 	r.POST("/evaluate/policies", policiesEvaluateHandler(cfg))
-	r.GET("/health", healthHandler)
 	r.POST("/validate/policies", PoliciesValidateHandler(cfg))
-
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	return r
 }

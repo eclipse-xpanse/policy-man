@@ -31,11 +31,22 @@ type evalCmdList struct {
 }
 
 type evalResult struct {
-	Input        string `json:"input,omitempty"`
-	Policy       string `json:"policy,omitempty"`
-	IsSuccessful bool   `json:"isSuccessful"`
+	Input        string `json:"input,omitempty" binding:"required"`
+	Policy       string `json:"policy,omitempty" binding:"required"`
+	IsSuccessful bool   `json:"isSuccessful" binding:"required"`
 }
 
+// @Tags			Policies Evaluate
+// @Summary		Evaluate the policies
+// @description	Evaluate whether the input meets all the policies
+// @Accept			json
+// @Produce		json
+// @Param			cmdList	body	evalCmdList	true	"evalCmdList"
+// @Router			/evaluate/policies [POST]
+// @Success		200	{object}	evalResult	"OK"
+// @Failure		400	{object}	ErrorResult	"Bad Request"
+// @Failure		500	{object}	ErrorResult	"Internal Server Error"
+// @Failure		502	{object}	ErrorResult	"Bad Gateway"
 func policiesEvaluateHandler(_ *config.Conf) gin.HandlerFunc {
 	return func(c *gin.Context) {
 
@@ -43,14 +54,14 @@ func policiesEvaluateHandler(_ *config.Conf) gin.HandlerFunc {
 
 		if err := c.ShouldBindWith(&cmdList, binding.JSON); err != nil {
 			log.Debug(err)
-			abortWithError(c, http.StatusBadRequest, "Missing eval cmd field.")
+			abortWithError(c, http.StatusBadRequest, fmt.Sprintf("Missing required field. Details:%v", err))
 			return
 		}
 
 		for _, policy := range cmdList.PolicyList {
 			decision, err := policyQuery(policy, cmdList.Input)
 			if err != nil {
-				abortWithError(c, 500, err.Error())
+				abortWithError(c, http.StatusInternalServerError, err.Error())
 				return
 			}
 			if !decision {
@@ -63,12 +74,23 @@ func policiesEvaluateHandler(_ *config.Conf) gin.HandlerFunc {
 			}
 		}
 
-		c.JSON(200, evalResult{
+		c.JSON(http.StatusOK, evalResult{
 			IsSuccessful: true,
 		})
 	}
 }
 
+// @Tags			Policies Evaluate
+// @Summary		Evaluate the policy
+// @description	Evaluate whether the input meets the policy
+// @Accept			json
+// @Produce		json
+// @Router			/evaluate/policy [POST]
+// @Param			cmd	body		evalCmd		true	"evalCmd"
+// @Success		200	{object}	evalResult	"OK"
+// @Failure		400	{object}	ErrorResult	"Bad Request"
+// @Failure		500	{object}	ErrorResult	"Internal Server Error"
+// @Failure		502	{object}	ErrorResult	"Bad Gateway"
 func policyEvaluateHandler(_ *config.Conf) gin.HandlerFunc {
 	return func(c *gin.Context) {
 
@@ -76,17 +98,17 @@ func policyEvaluateHandler(_ *config.Conf) gin.HandlerFunc {
 
 		if err := c.ShouldBindWith(&cmd, binding.JSON); err != nil {
 			log.Debug(err)
-			abortWithError(c, http.StatusBadRequest, "Missing eval cmd field.")
+			abortWithError(c, http.StatusBadRequest, fmt.Sprintf("Missing required field. Details:%v", err))
 			return
 		}
 
 		decision, err := policyQuery(cmd.Policy, cmd.Input)
 		if err != nil {
-			abortWithError(c, 500, err.Error())
+			abortWithError(c, http.StatusInternalServerError, err.Error())
 			return
 		}
 
-		c.JSON(200, evalResult{
+		c.JSON(http.StatusOK, evalResult{
 			IsSuccessful: decision,
 		})
 	}

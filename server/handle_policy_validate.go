@@ -19,11 +19,23 @@ type validatePolicyList struct {
 }
 
 type ValidateResponse struct {
-	IsSuccessful bool   `json:"isSuccessful"`
-	Policy       string `json:"policy,omitempty"`
-	ErrMsg       string `json:"err_msg,omitempty"`
+	IsSuccessful bool   `json:"isSuccessful" binding:"required"`
+	Policy       string `json:"policy,omitempty" binding:"required"`
+	ErrMsg       string `json:"err_msg,omitempty" binding:"required"`
 }
 
+// PoliciesValidateHandler
+// @Tags			Policies Validate
+// @Summary		Validate the policies
+// @description	Validate the policies
+// @Accept			json
+// @Produce		json
+// @Router			/validate/policies [POST]
+// @Param			policyList	body		validatePolicyList	true	"policyList"
+// @Success		200			{object}	ValidateResponse	"OK"
+// @Failure		400			{object}	ErrorResult			"Bad Request"
+// @Failure		500			{object}	ErrorResult			"Internal Server Error"
+// @Failure		502			{object}	ErrorResult			"Bad Gateway"
 func PoliciesValidateHandler(_ *config.Conf) gin.HandlerFunc {
 	return func(c *gin.Context) {
 

@@ -1,0 +1,216 @@
+definitions:
+  server.ErrorResult:
+    properties:
+      err_msg:
+        type: string
+    required:
+    - err_msg
+    type: object
+  server.ValidateResponse:
+    properties:
+      err_msg:
+        type: string
+      isSuccessful:
+        type: boolean
+      policy:
+        type: string
+    required:
+    - err_msg
+    - isSuccessful
+    - policy
+    type: object
+  server.evalCmd:
+    properties:
+      input:
+        type: string
+      policy:
+        type: string
+    required:
+    - input
+    - policy
+    type: object
+  server.evalCmdList:
+    properties:
+      input:
+        type: string
+      policy_list:
+        items:
+          type: string
+        type: array
+    required:
+    - input
+    - policy_list
+    type: object
+  server.evalResult:
+    properties:
+      input:
+        type: string
+      isSuccessful:
+        type: boolean
+      policy:
+        type: string
+    required:
+    - input
+    - isSuccessful
+    - policy
+    type: object
+  server.healthStatus:
+    enum:
+    - OK
+    - NOK
+    type: string
+    x-enum-varnames:
+    - healthOK
+    - healthNOK
+  server.systemStatus:
+    properties:
+      healthStatus:
+        $ref: '#/definitions/server.healthStatus'
+    required:
+    - healthStatus
+    type: object
+  server.validatePolicyList:
+    properties:
+      policy_list:
+        items:
+          type: string
+        type: array
+    required:
+    - policy_list
+    type: object
+info:
+  contact: {}
+  description: OpenAPI of policy-man server
+  title: OpenAPI of policy-man
+  version: "1.0"
+paths:
+  /evaluate/policies:
+    post:
+      consumes:
+      - application/json
+      description: Evaluate whether the input meets all the policies
+      parameters:
+      - description: evalCmdList
+        in: body
+        name: cmdList
+        required: true
+        schema:
+          $ref: '#/definitions/server.evalCmdList'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/server.evalResult'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/server.ErrorResult'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/server.ErrorResult'
+        "502":
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/server.ErrorResult'
+      summary: Evaluate the policies
+      tags:
+      - Policies Evaluate
+  /evaluate/policy:
+    post:
+      consumes:
+      - application/json
+      description: Evaluate whether the input meets the policy
+      parameters:
+      - description: evalCmd
+        in: body
+        name: cmd
+        required: true
+        schema:
+          $ref: '#/definitions/server.evalCmd'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/server.evalResult'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/server.ErrorResult'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/server.ErrorResult'
+        "502":
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/server.ErrorResult'
+      summary: Evaluate the policy
+      tags:
+      - Policies Evaluate
+  /health:
+    get:
+      consumes:
+      - application/json
+      description: Check health status of service
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/server.systemStatus'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/server.ErrorResult'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/server.ErrorResult'
+        "502":
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/server.ErrorResult'
+      summary: Check health
+      tags:
+      - Admin
+  /validate/policies:
+    post:
+      consumes:
+      - application/json
+      description: Validate the policies
+      parameters:
+      - description: policyList
+        in: body
+        name: policyList
+        required: true
+        schema:
+          $ref: '#/definitions/server.validatePolicyList'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/server.ValidateResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/server.ErrorResult'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/server.ErrorResult'
+        "502":
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/server.ErrorResult'
+      summary: Validate the policies
+      tags:
+      - Policies Validate
+swagger: "2.0"

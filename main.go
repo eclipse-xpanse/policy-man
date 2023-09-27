@@ -13,6 +13,11 @@ import (
 	"github.com/eclipse-xpanse/policy-man/server"
 )
 
+// Add comments to describe server openAPI information
+//
+//	@title			OpenAPI of policy-man
+//	@version		1.0
+//	@description	OpenAPI of policy-man server
 func main() {
 
 	cfg, err := config.LoadConf()

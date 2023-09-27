@@ -18,9 +18,19 @@ const (
 )
 
 type systemStatus struct {
-	HealthStatus healthStatus `json:"healthStatus"`
+	HealthStatus healthStatus `json:"healthStatus" binding:"required"`
 }
 
+// @Tags			Admin
+// @Summary		Check health
+// @description	Check health status of service
+// @Accept			json
+// @Produce		json
+// @Router			/health [GET]
+// @Success		200	{object}	systemStatus	"OK"
+// @Failure		400	{object}	ErrorResult		"Bad Request"
+// @Failure		500	{object}	ErrorResult		"Internal Server Error"
+// @Failure		502	{object}	ErrorResult		"Bad Gateway"
 func healthHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, systemStatus{HealthStatus: healthOK})
 }
