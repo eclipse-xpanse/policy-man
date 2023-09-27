@@ -1,3 +1,7 @@
+# install swag and update docs of openapi with swag
+INSTALL_SWAG := $(shell go get -u github.com/swaggo/swag/cmd/swag;go install github.com/swaggo/swag/cmd/swag)
+UPDATE_DOCS := $(shell swag fmt;swag init -o ./openapi/docs)
+
 DIST := dist
 EXECUTABLE := policy-man
 

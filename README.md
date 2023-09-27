@@ -3,6 +3,21 @@ OPA based policy engine.
 
 ## How to use
 
+### Update RESTful API documentation
+
+All files of the RESTful API documentation are in the directory [./openapi/docs](./openapi/docs), when the service API 
+or API annotations are updated, these files should be updated by the following commands:
+
+```shell
+go get -u github.com/swaggo/swag/cmd/swag
+go install github.com/swaggo/swag/cmd/swag
+swag fmt
+swag init -o ./openapi/docs
+```
+
+All the above commands are written to the file [Makefile](./Makefile), You can also use commands in the chapter 
+[#Build from source](#Build from source) directly to update these files.
+
 ### Build from source
 
 ```shell
@@ -31,6 +46,11 @@ Flags:
       --log.path string    The path of the log (default "stdout")
   -p, --port string        The port of the HTTP server
 ```
+
+### Use Swagger UI
+
+Open internet browser and navigate to the url [http://localhost:9443/swagger/index.html](http://localhost:9443/swagger/index.html).
+View and Call APIs on the page of swagger UI.
 
 ## Evaluate the input by a policy list
 
