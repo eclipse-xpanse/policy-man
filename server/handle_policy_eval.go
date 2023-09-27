@@ -17,7 +17,6 @@ import (
 	"github.com/open-policy-agent/opa/rego"
 	"net/http"
 	"runtime/debug"
-	"strings"
 )
 
 type evalCmd struct {
@@ -116,35 +115,9 @@ func policyEvaluateHandler(_ *config.Conf) gin.HandlerFunc {
 
 func policyQuery(policyRego string, input interface{}) (decision bool, err error) {
 
-	policyRegoFixed := removePackageAtTheBeginning(policyRego)
-	policyRegoEx := fmt.Sprintf("package policyman.auth\n\n%v", policyRegoFixed)
+	policyRegoEx := handlePackageName(policyRego)
 	policyQuery := "data.policyman.auth"
 	return PolicyEval(policyRegoEx, policyQuery, input)
-}
-
-func removePackageAtTheBeginning(input string) string {
-	lines := strings.Split(input, "\n")
-	var outputLines []string
-
-	for _, line := range lines {
-		// Strip the spaces
-		line = strings.TrimSpace(line)
-
-		// Skip the blank lines and the lines starts with `#`
-		if len(line) == 0 || strings.HasPrefix(line, "#") {
-			continue
-		}
-
-		// Remove the line start with "package"
-		if len(outputLines) == 0 && strings.HasPrefix(line, "package") {
-			continue
-		}
-
-		outputLines = append(outputLines, line)
-	}
-
-	result := strings.Join(outputLines, "\n")
-	return result
 }
 
 func PolicyEval(policyRego string, policyQuery string, input interface{}) (decision bool, err error) {
