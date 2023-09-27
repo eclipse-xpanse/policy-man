@@ -11,6 +11,7 @@ import (
 	"github.com/eclipse-xpanse/policy-man/log"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
+	"github.com/styrainc/regal/pkg/rules"
 	"net/http"
 )
 
@@ -39,16 +40,17 @@ type ValidateResponse struct {
 func PoliciesValidateHandler(_ *config.Conf) gin.HandlerFunc {
 	return func(c *gin.Context) {
 
-		var policyList validatePolicyList
+		var policiesToBeValidated validatePolicyList
 
-		if err := c.ShouldBindWith(&policyList, binding.JSON); err != nil {
+		if err := c.ShouldBindWith(&policiesToBeValidated, binding.JSON); err != nil {
 			log.Debug(err)
 			abortWithError(c, http.StatusBadRequest, fmt.Sprintf("Missing required field. %v", err))
 			return
 		}
 
-		for _, policy := range policyList.PolicyList {
-			_, err := policyQuery(policy, map[string]any{})
+		for _, policy := range policiesToBeValidated.PolicyList {
+			packageUpdatedPolicy := handlePackageName(policy)
+			_, err := rules.InputFromText("content_validated.rego", packageUpdatedPolicy)
 			if err != nil {
 				c.JSON(http.StatusOK, ValidateResponse{
 					IsSuccessful: false,
