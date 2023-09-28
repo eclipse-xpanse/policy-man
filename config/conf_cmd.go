@@ -6,21 +6,25 @@
 package config
 
 import (
+	"fmt"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
 
-var RootCmd = &cobra.Command{
-	Use: "policy-man",
-	Long: `
+var Logo string = `
   ___  ___  _    ___ _____   __        __  __   _   _  _
  | _ \/ _ \| |  |_ _/ __\ \ / /  ___  |  \/  | /_\ | \| |
  |  _/ (_) | |__ | | (__ \ V /  |___| | |\/| |/ _ \| .' |
  |_|  \___/|____|___\___| |_|         |_|  |_/_/ \_\_|\_|
 
 
-`,
+`
+
+var RootCmd = &cobra.Command{
+	Use:  "policy-man",
+	Long: Logo,
 	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Print(Logo)
 	},
 }
 
