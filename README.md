@@ -1,22 +1,17 @@
+<p align='center'>
+<a href="https://github.com/eclipse-xpanse/policy-man/actions/workflows/ci.yml" target="_blank">
+    <img src="https://github.com/eclipse-xpanse/policy-man/actions/workflows/ci.yml/badge.svg" alt="build">
+</a>
+
+<a href="https://opensource.org/licenses/Apache-2.0" target="_blank">
+    <img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="coverage">
+  </a>
+</p>
+
 # policy-man
 OPA based policy engine.
 
 ## How to use
-
-### Update RESTful API documentation
-
-All files of the RESTful API documentation are in the directory [./openapi/docs](./openapi/docs), when the service API 
-or API annotations are updated, these files should be updated by the following commands:
-
-```shell
-go get -u github.com/swaggo/swag/cmd/swag
-go install github.com/swaggo/swag/cmd/swag
-swag fmt
-swag init -o ./openapi/docs
-```
-
-All the above commands are written to the file [Makefile](./Makefile), You can also use commands in the chapter 
-[#Build from source](#Build from source) directly to update these files.
 
 ### Build from source
 
@@ -47,12 +42,7 @@ Flags:
   -p, --port string        The port of the HTTP server
 ```
 
-### Use Swagger UI
-
-Open internet browser and navigate to the url [http://localhost:9443/swagger/index.html](http://localhost:9443/swagger/index.html).
-View and Call APIs on the page of swagger UI.
-
-## Evaluate the input by a policy list
+### Evaluate the input by a policy list
 
 Only `allow` and `deny` will be evaluated. If the variable `allow` be evaluated as false, or the variable `deny` be 
 evaluated as true, The policy will be evaluated as false.
@@ -69,3 +59,23 @@ $ curl -X POST http://localhost:9443/evaluate/policies -H 'Content-Type: applica
  
 {"isSuccessful":true}
 ```
+
+### Use Swagger UI
+
+Open internet browser and navigate to the url [http://localhost:9443/swagger/index.html](http://localhost:9443/swagger/index.html).
+View and Call APIs on the page of swagger UI.
+
+### Update OpenAPI documentation
+
+All files of the RESTful API documentation are in the directory [./openapi/docs](./openapi/docs), when the service API
+or API annotations are updated, these files should be updated by the following commands:
+
+```shell
+go get -u github.com/swaggo/swag/cmd/swag
+go install github.com/swaggo/swag/cmd/swag
+swag fmt
+swag init -o ./openapi/docs
+```
+
+All the above commands are written to the file [Makefile](./Makefile), You can also use commands in the chapter
+[Build from source](#Build from source) directly to update these files.
