@@ -1,4 +1,31 @@
 definitions:
+  rego.ExpressionValue:
+    properties:
+      location:
+        $ref: '#/definitions/rego.Location'
+      text:
+        type: string
+      value: {}
+    type: object
+  rego.Location:
+    properties:
+      col:
+        type: integer
+      row:
+        type: integer
+    type: object
+  rego.Result:
+    properties:
+      bindings:
+        $ref: '#/definitions/rego.Vars'
+      expressions:
+        items:
+          $ref: '#/definitions/rego.ExpressionValue'
+        type: array
+    type: object
+  rego.Vars:
+    additionalProperties: true
+    type: object
   server.ErrorResult:
     properties:
       err_msg:
@@ -115,9 +142,45 @@ paths:
           description: Bad Gateway
           schema:
             $ref: '#/definitions/server.ErrorResult'
-      summary: Evaluate the policies
+      summary: Evaluate the input by policies
       tags:
-      - Policies Evaluate
+      - Policies Evaluation
+  /evaluate/policies/raw:
+    post:
+      consumes:
+      - application/json
+      description: Evaluate the input by all the policies and get raw result
+      parameters:
+      - description: evalCmdList
+        in: body
+        name: cmdList
+        required: true
+        schema:
+          $ref: '#/definitions/server.evalCmdList'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/rego.Result'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/server.ErrorResult'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/server.ErrorResult'
+        "502":
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/server.ErrorResult'
+      summary: Evaluate the input by policies
+      tags:
+      - Policies Evaluation
   /evaluate/policy:
     post:
       consumes:
@@ -149,9 +212,45 @@ paths:
           description: Bad Gateway
           schema:
             $ref: '#/definitions/server.ErrorResult'
-      summary: Evaluate the policy
+      summary: Evaluate the input by policies
       tags:
-      - Policies Evaluate
+      - Policies Evaluation
+  /evaluate/policy/raw:
+    post:
+      consumes:
+      - application/json
+      description: Evaluate the input by the policy and get raw result
+      parameters:
+      - description: evalCmd
+        in: body
+        name: cmd
+        required: true
+        schema:
+          $ref: '#/definitions/server.evalCmd'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/rego.Result'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/server.ErrorResult'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/server.ErrorResult'
+        "502":
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/server.ErrorResult'
+      summary: Evaluate the input by policies
+      tags:
+      - Policies Evaluation
   /health:
     get:
       consumes:

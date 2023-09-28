@@ -128,7 +128,9 @@ func router(cfg *config.Conf) *gin.Engine {
 	))
 	r.GET("/health", healthHandler)
 	r.POST("/evaluate/policy", policyEvaluateHandler(cfg))
+	r.POST("/evaluate/policy/raw", policyEvaluateRawHandler(cfg))
 	r.POST("/evaluate/policies", policiesEvaluateHandler(cfg))
+	r.POST("/evaluate/policies/raw", policiesEvaluateRawHandler(cfg))
 	r.POST("/validate/policies", PoliciesValidateHandler(cfg))
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	return r
