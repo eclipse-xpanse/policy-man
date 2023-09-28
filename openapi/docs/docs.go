@@ -25,9 +25,9 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Policies Evaluate"
+                    "Policies Evaluation"
                 ],
-                "summary": "Evaluate the policies",
+                "summary": "Evaluate the input by policies",
                 "parameters": [
                     {
                         "description": "evalCmdList",
@@ -67,6 +67,61 @@ const docTemplate = `{
                 }
             }
         },
+        "/evaluate/policies/raw": {
+            "post": {
+                "description": "Evaluate the input by all the policies and get raw result",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Policies Evaluation"
+                ],
+                "summary": "Evaluate the input by policies",
+                "parameters": [
+                    {
+                        "description": "evalCmdList",
+                        "name": "cmdList",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/server.evalCmdList"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/rego.Result"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/server.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/server.ErrorResult"
+                        }
+                    },
+                    "502": {
+                        "description": "Bad Gateway",
+                        "schema": {
+                            "$ref": "#/definitions/server.ErrorResult"
+                        }
+                    }
+                }
+            }
+        },
         "/evaluate/policy": {
             "post": {
                 "description": "Evaluate whether the input meets the policy",
@@ -77,9 +132,9 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Policies Evaluate"
+                    "Policies Evaluation"
                 ],
-                "summary": "Evaluate the policy",
+                "summary": "Evaluate the input by policies",
                 "parameters": [
                     {
                         "description": "evalCmd",
@@ -96,6 +151,61 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/server.evalResult"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/server.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/server.ErrorResult"
+                        }
+                    },
+                    "502": {
+                        "description": "Bad Gateway",
+                        "schema": {
+                            "$ref": "#/definitions/server.ErrorResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/evaluate/policy/raw": {
+            "post": {
+                "description": "Evaluate the input by the policy and get raw result",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Policies Evaluation"
+                ],
+                "summary": "Evaluate the input by policies",
+                "parameters": [
+                    {
+                        "description": "evalCmd",
+                        "name": "cmd",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/server.evalCmd"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/rego.Result"
+                            }
                         }
                     },
                     "400": {
@@ -214,6 +324,47 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "rego.ExpressionValue": {
+            "type": "object",
+            "properties": {
+                "location": {
+                    "$ref": "#/definitions/rego.Location"
+                },
+                "text": {
+                    "type": "string"
+                },
+                "value": {}
+            }
+        },
+        "rego.Location": {
+            "type": "object",
+            "properties": {
+                "col": {
+                    "type": "integer"
+                },
+                "row": {
+                    "type": "integer"
+                }
+            }
+        },
+        "rego.Result": {
+            "type": "object",
+            "properties": {
+                "bindings": {
+                    "$ref": "#/definitions/rego.Vars"
+                },
+                "expressions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rego.ExpressionValue"
+                    }
+                }
+            }
+        },
+        "rego.Vars": {
+            "type": "object",
+            "additionalProperties": true
+        },
         "server.ErrorResult": {
             "type": "object",
             "required": [

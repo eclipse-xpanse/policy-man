@@ -40,8 +40,11 @@ is_admin if "admin" in input.subject.groups
 		},
 	}
 
-	decision, err := server.PolicyEval(rego, query, input)
-	assert.Nil(t, err)
-	assert.Equal(t, true, decision)
+	results, err := server.PolicyEval(rego, query, input)
+	exceptMap := make(map[string]interface{})
+	exceptMap["allow"] = true
 
+	assert.Nil(t, err)
+	assert.True(t, len(results) == 1)
+	assert.Equal(t, exceptMap, results[0].Expressions[0].Value)
 }

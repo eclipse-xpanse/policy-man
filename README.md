@@ -74,7 +74,7 @@ or API annotations are updated, these files should be updated by the following c
 go get -u github.com/swaggo/swag/cmd/swag
 go install github.com/swaggo/swag/cmd/swag
 swag fmt
-swag init -o ./openapi/docs
+swag init --parseDependency --parseInternal -o ./openapi/docs
 ```
 
 All the above commands are written to the file [Makefile](./Makefile), You can also use commands in the chapter
