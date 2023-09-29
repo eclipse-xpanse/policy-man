@@ -10,7 +10,7 @@ import (
 	"net/http"
 )
 
-type healthStatus string
+type healthStatus string // @name HealthStatus
 
 const (
 	healthOK  healthStatus = "OK"
@@ -19,7 +19,7 @@ const (
 
 type systemStatus struct {
 	HealthStatus healthStatus `json:"healthStatus" binding:"required"`
-}
+} // @name SystemStatus
 
 // @Tags			Admin
 // @Summary		Check health

@@ -35,7 +35,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/server.evalCmdList"
+                            "$ref": "#/definitions/EvalCmdList"
                         }
                     }
                 ],
@@ -43,25 +43,25 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/server.evalResult"
+                            "$ref": "#/definitions/EvalResult"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/server.ErrorResult"
+                            "$ref": "#/definitions/ErrorResult"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/server.ErrorResult"
+                            "$ref": "#/definitions/ErrorResult"
                         }
                     },
                     "502": {
                         "description": "Bad Gateway",
                         "schema": {
-                            "$ref": "#/definitions/server.ErrorResult"
+                            "$ref": "#/definitions/ErrorResult"
                         }
                     }
                 }
@@ -87,7 +87,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/server.evalCmdList"
+                            "$ref": "#/definitions/EvalCmdList"
                         }
                     }
                 ],
@@ -104,19 +104,19 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/server.ErrorResult"
+                            "$ref": "#/definitions/ErrorResult"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/server.ErrorResult"
+                            "$ref": "#/definitions/ErrorResult"
                         }
                     },
                     "502": {
                         "description": "Bad Gateway",
                         "schema": {
-                            "$ref": "#/definitions/server.ErrorResult"
+                            "$ref": "#/definitions/ErrorResult"
                         }
                     }
                 }
@@ -142,7 +142,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/server.evalCmd"
+                            "$ref": "#/definitions/EvalCmd"
                         }
                     }
                 ],
@@ -150,25 +150,25 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/server.evalResult"
+                            "$ref": "#/definitions/EvalResult"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/server.ErrorResult"
+                            "$ref": "#/definitions/ErrorResult"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/server.ErrorResult"
+                            "$ref": "#/definitions/ErrorResult"
                         }
                     },
                     "502": {
                         "description": "Bad Gateway",
                         "schema": {
-                            "$ref": "#/definitions/server.ErrorResult"
+                            "$ref": "#/definitions/ErrorResult"
                         }
                     }
                 }
@@ -194,7 +194,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/server.evalCmd"
+                            "$ref": "#/definitions/EvalCmd"
                         }
                     }
                 ],
@@ -211,19 +211,19 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/server.ErrorResult"
+                            "$ref": "#/definitions/ErrorResult"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/server.ErrorResult"
+                            "$ref": "#/definitions/ErrorResult"
                         }
                     },
                     "502": {
                         "description": "Bad Gateway",
                         "schema": {
-                            "$ref": "#/definitions/server.ErrorResult"
+                            "$ref": "#/definitions/ErrorResult"
                         }
                     }
                 }
@@ -246,25 +246,25 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/server.systemStatus"
+                            "$ref": "#/definitions/SystemStatus"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/server.ErrorResult"
+                            "$ref": "#/definitions/ErrorResult"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/server.ErrorResult"
+                            "$ref": "#/definitions/ErrorResult"
                         }
                     },
                     "502": {
                         "description": "Bad Gateway",
                         "schema": {
-                            "$ref": "#/definitions/server.ErrorResult"
+                            "$ref": "#/definitions/ErrorResult"
                         }
                     }
                 }
@@ -290,7 +290,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/server.validatePolicyList"
+                            "$ref": "#/definitions/ValidatePolicyList"
                         }
                     }
                 ],
@@ -298,25 +298,25 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/server.ValidateResponse"
+                            "$ref": "#/definitions/ValidateResponse"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/server.ErrorResult"
+                            "$ref": "#/definitions/ErrorResult"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/server.ErrorResult"
+                            "$ref": "#/definitions/ErrorResult"
                         }
                     },
                     "502": {
                         "description": "Bad Gateway",
                         "schema": {
-                            "$ref": "#/definitions/server.ErrorResult"
+                            "$ref": "#/definitions/ErrorResult"
                         }
                     }
                 }
@@ -324,6 +324,124 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "ErrorResult": {
+            "type": "object",
+            "required": [
+                "err_msg"
+            ],
+            "properties": {
+                "err_msg": {
+                    "type": "string"
+                }
+            }
+        },
+        "EvalCmd": {
+            "type": "object",
+            "required": [
+                "input",
+                "policy"
+            ],
+            "properties": {
+                "input": {
+                    "type": "string"
+                },
+                "policy": {
+                    "type": "string"
+                }
+            }
+        },
+        "EvalCmdList": {
+            "type": "object",
+            "required": [
+                "input",
+                "policy_list"
+            ],
+            "properties": {
+                "input": {
+                    "type": "string"
+                },
+                "policy_list": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "EvalResult": {
+            "type": "object",
+            "required": [
+                "input",
+                "isSuccessful",
+                "policy"
+            ],
+            "properties": {
+                "input": {
+                    "type": "string"
+                },
+                "isSuccessful": {
+                    "type": "boolean"
+                },
+                "policy": {
+                    "type": "string"
+                }
+            }
+        },
+        "HealthStatus": {
+            "type": "string",
+            "enum": [
+                "OK",
+                "NOK"
+            ],
+            "x-enum-varnames": [
+                "healthOK",
+                "healthNOK"
+            ]
+        },
+        "SystemStatus": {
+            "type": "object",
+            "required": [
+                "healthStatus"
+            ],
+            "properties": {
+                "healthStatus": {
+                    "$ref": "#/definitions/HealthStatus"
+                }
+            }
+        },
+        "ValidatePolicyList": {
+            "type": "object",
+            "required": [
+                "policy_list"
+            ],
+            "properties": {
+                "policy_list": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "ValidateResponse": {
+            "type": "object",
+            "required": [
+                "err_msg",
+                "isSuccessful",
+                "policy"
+            ],
+            "properties": {
+                "err_msg": {
+                    "type": "string"
+                },
+                "isSuccessful": {
+                    "type": "boolean"
+                },
+                "policy": {
+                    "type": "string"
+                }
+            }
+        },
         "rego.ExpressionValue": {
             "type": "object",
             "properties": {
@@ -364,124 +482,6 @@ const docTemplate = `{
         "rego.Vars": {
             "type": "object",
             "additionalProperties": true
-        },
-        "server.ErrorResult": {
-            "type": "object",
-            "required": [
-                "err_msg"
-            ],
-            "properties": {
-                "err_msg": {
-                    "type": "string"
-                }
-            }
-        },
-        "server.ValidateResponse": {
-            "type": "object",
-            "required": [
-                "err_msg",
-                "isSuccessful",
-                "policy"
-            ],
-            "properties": {
-                "err_msg": {
-                    "type": "string"
-                },
-                "isSuccessful": {
-                    "type": "boolean"
-                },
-                "policy": {
-                    "type": "string"
-                }
-            }
-        },
-        "server.evalCmd": {
-            "type": "object",
-            "required": [
-                "input",
-                "policy"
-            ],
-            "properties": {
-                "input": {
-                    "type": "string"
-                },
-                "policy": {
-                    "type": "string"
-                }
-            }
-        },
-        "server.evalCmdList": {
-            "type": "object",
-            "required": [
-                "input",
-                "policy_list"
-            ],
-            "properties": {
-                "input": {
-                    "type": "string"
-                },
-                "policy_list": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                }
-            }
-        },
-        "server.evalResult": {
-            "type": "object",
-            "required": [
-                "input",
-                "isSuccessful",
-                "policy"
-            ],
-            "properties": {
-                "input": {
-                    "type": "string"
-                },
-                "isSuccessful": {
-                    "type": "boolean"
-                },
-                "policy": {
-                    "type": "string"
-                }
-            }
-        },
-        "server.healthStatus": {
-            "type": "string",
-            "enum": [
-                "OK",
-                "NOK"
-            ],
-            "x-enum-varnames": [
-                "healthOK",
-                "healthNOK"
-            ]
-        },
-        "server.systemStatus": {
-            "type": "object",
-            "required": [
-                "healthStatus"
-            ],
-            "properties": {
-                "healthStatus": {
-                    "$ref": "#/definitions/server.healthStatus"
-                }
-            }
-        },
-        "server.validatePolicyList": {
-            "type": "object",
-            "required": [
-                "policy_list"
-            ],
-            "properties": {
-                "policy_list": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                }
-            }
         }
     }
 }`

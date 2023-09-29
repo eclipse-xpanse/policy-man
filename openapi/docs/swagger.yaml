@@ -1,4 +1,83 @@
 definitions:
+  ErrorResult:
+    properties:
+      err_msg:
+        type: string
+    required:
+    - err_msg
+    type: object
+  EvalCmd:
+    properties:
+      input:
+        type: string
+      policy:
+        type: string
+    required:
+    - input
+    - policy
+    type: object
+  EvalCmdList:
+    properties:
+      input:
+        type: string
+      policy_list:
+        items:
+          type: string
+        type: array
+    required:
+    - input
+    - policy_list
+    type: object
+  EvalResult:
+    properties:
+      input:
+        type: string
+      isSuccessful:
+        type: boolean
+      policy:
+        type: string
+    required:
+    - input
+    - isSuccessful
+    - policy
+    type: object
+  HealthStatus:
+    enum:
+    - OK
+    - NOK
+    type: string
+    x-enum-varnames:
+    - healthOK
+    - healthNOK
+  SystemStatus:
+    properties:
+      healthStatus:
+        $ref: '#/definitions/HealthStatus'
+    required:
+    - healthStatus
+    type: object
+  ValidatePolicyList:
+    properties:
+      policy_list:
+        items:
+          type: string
+        type: array
+    required:
+    - policy_list
+    type: object
+  ValidateResponse:
+    properties:
+      err_msg:
+        type: string
+      isSuccessful:
+        type: boolean
+      policy:
+        type: string
+    required:
+    - err_msg
+    - isSuccessful
+    - policy
+    type: object
   rego.ExpressionValue:
     properties:
       location:
@@ -26,85 +105,6 @@ definitions:
   rego.Vars:
     additionalProperties: true
     type: object
-  server.ErrorResult:
-    properties:
-      err_msg:
-        type: string
-    required:
-    - err_msg
-    type: object
-  server.ValidateResponse:
-    properties:
-      err_msg:
-        type: string
-      isSuccessful:
-        type: boolean
-      policy:
-        type: string
-    required:
-    - err_msg
-    - isSuccessful
-    - policy
-    type: object
-  server.evalCmd:
-    properties:
-      input:
-        type: string
-      policy:
-        type: string
-    required:
-    - input
-    - policy
-    type: object
-  server.evalCmdList:
-    properties:
-      input:
-        type: string
-      policy_list:
-        items:
-          type: string
-        type: array
-    required:
-    - input
-    - policy_list
-    type: object
-  server.evalResult:
-    properties:
-      input:
-        type: string
-      isSuccessful:
-        type: boolean
-      policy:
-        type: string
-    required:
-    - input
-    - isSuccessful
-    - policy
-    type: object
-  server.healthStatus:
-    enum:
-    - OK
-    - NOK
-    type: string
-    x-enum-varnames:
-    - healthOK
-    - healthNOK
-  server.systemStatus:
-    properties:
-      healthStatus:
-        $ref: '#/definitions/server.healthStatus'
-    required:
-    - healthStatus
-    type: object
-  server.validatePolicyList:
-    properties:
-      policy_list:
-        items:
-          type: string
-        type: array
-    required:
-    - policy_list
-    type: object
 info:
   contact: {}
   description: OpenAPI of policy-man server
@@ -122,26 +122,26 @@ paths:
         name: cmdList
         required: true
         schema:
-          $ref: '#/definitions/server.evalCmdList'
+          $ref: '#/definitions/EvalCmdList'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/server.evalResult'
+            $ref: '#/definitions/EvalResult'
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/server.ErrorResult'
+            $ref: '#/definitions/ErrorResult'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/server.ErrorResult'
+            $ref: '#/definitions/ErrorResult'
         "502":
           description: Bad Gateway
           schema:
-            $ref: '#/definitions/server.ErrorResult'
+            $ref: '#/definitions/ErrorResult'
       summary: Evaluate the input by policies
       tags:
       - Policies Evaluation
@@ -156,7 +156,7 @@ paths:
         name: cmdList
         required: true
         schema:
-          $ref: '#/definitions/server.evalCmdList'
+          $ref: '#/definitions/EvalCmdList'
       produces:
       - application/json
       responses:
@@ -169,15 +169,15 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/server.ErrorResult'
+            $ref: '#/definitions/ErrorResult'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/server.ErrorResult'
+            $ref: '#/definitions/ErrorResult'
         "502":
           description: Bad Gateway
           schema:
-            $ref: '#/definitions/server.ErrorResult'
+            $ref: '#/definitions/ErrorResult'
       summary: Evaluate the input by policies
       tags:
       - Policies Evaluation
@@ -192,26 +192,26 @@ paths:
         name: cmd
         required: true
         schema:
-          $ref: '#/definitions/server.evalCmd'
+          $ref: '#/definitions/EvalCmd'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/server.evalResult'
+            $ref: '#/definitions/EvalResult'
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/server.ErrorResult'
+            $ref: '#/definitions/ErrorResult'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/server.ErrorResult'
+            $ref: '#/definitions/ErrorResult'
         "502":
           description: Bad Gateway
           schema:
-            $ref: '#/definitions/server.ErrorResult'
+            $ref: '#/definitions/ErrorResult'
       summary: Evaluate the input by policies
       tags:
       - Policies Evaluation
@@ -226,7 +226,7 @@ paths:
         name: cmd
         required: true
         schema:
-          $ref: '#/definitions/server.evalCmd'
+          $ref: '#/definitions/EvalCmd'
       produces:
       - application/json
       responses:
@@ -239,15 +239,15 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/server.ErrorResult'
+            $ref: '#/definitions/ErrorResult'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/server.ErrorResult'
+            $ref: '#/definitions/ErrorResult'
         "502":
           description: Bad Gateway
           schema:
-            $ref: '#/definitions/server.ErrorResult'
+            $ref: '#/definitions/ErrorResult'
       summary: Evaluate the input by policies
       tags:
       - Policies Evaluation
@@ -262,19 +262,19 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/server.systemStatus'
+            $ref: '#/definitions/SystemStatus'
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/server.ErrorResult'
+            $ref: '#/definitions/ErrorResult'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/server.ErrorResult'
+            $ref: '#/definitions/ErrorResult'
         "502":
           description: Bad Gateway
           schema:
-            $ref: '#/definitions/server.ErrorResult'
+            $ref: '#/definitions/ErrorResult'
       summary: Check health
       tags:
       - Admin
@@ -289,26 +289,26 @@ paths:
         name: policyList
         required: true
         schema:
-          $ref: '#/definitions/server.validatePolicyList'
+          $ref: '#/definitions/ValidatePolicyList'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/server.ValidateResponse'
+            $ref: '#/definitions/ValidateResponse'
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/server.ErrorResult'
+            $ref: '#/definitions/ErrorResult'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/server.ErrorResult'
+            $ref: '#/definitions/ErrorResult'
         "502":
           description: Bad Gateway
           schema:
-            $ref: '#/definitions/server.ErrorResult'
+            $ref: '#/definitions/ErrorResult'
       summary: Validate the policies
       tags:
       - Policies Validate
