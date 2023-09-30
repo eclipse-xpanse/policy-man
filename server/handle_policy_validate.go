@@ -17,13 +17,13 @@ import (
 
 type validatePolicyList struct {
 	PolicyList []string `json:"policy_list" binding:"required"`
-}
+} // @name ValidatePolicyList
 
 type ValidateResponse struct {
 	IsSuccessful bool   `json:"isSuccessful" binding:"required"`
 	Policy       string `json:"policy,omitempty" binding:"required"`
 	ErrMsg       string `json:"err_msg,omitempty" binding:"required"`
-}
+} // @name ValidateResponse
 
 // PoliciesValidateHandler
 // @Tags			Policies Validate

@@ -22,18 +22,18 @@ import (
 type evalCmd struct {
 	Policy string `json:"policy" binding:"required"`
 	Input  string `json:"input" binding:"required"`
-}
+} // @name EvalCmd
 
 type evalCmdList struct {
 	Input      string   `json:"input" binding:"required"`
 	PolicyList []string `json:"policy_list" binding:"required"`
-}
+} // @name EvalCmdList
 
 type evalResult struct {
 	Input        string `json:"input,omitempty" binding:"required"`
 	Policy       string `json:"policy,omitempty" binding:"required"`
 	IsSuccessful bool   `json:"isSuccessful" binding:"required"`
-}
+} // @name EvalResult
 
 // @Tags			Policies Evaluation
 // @Summary		Evaluate the input by policies
