@@ -48,7 +48,7 @@ Only `allow` and `deny` will be evaluated. If the variable `allow` be evaluated 
 evaluated as true, The policy will be evaluated as false.
 
 ```shell
-$ curl -X POST http://localhost:9443/evaluate/policies -H 'Content-Type: application/json' -d '
+$ curl -X POST http://localhost:8090/evaluate/policies -H 'Content-Type: application/json' -d '
 {
     "policy_list": [
         "import future.keywords.if\nimport future.keywords.in\n\ndefault allow := false\n\nallow if {\n    input.method == \"GET\"\n    input.path == [\"salary\", input.subject.user]\n}\n\nallow if is_admin\n\nis_admin if \"admin\" in input.subject.groups",
@@ -62,7 +62,7 @@ $ curl -X POST http://localhost:9443/evaluate/policies -H 'Content-Type: applica
 
 ### Use Swagger UI
 
-Open internet browser and navigate to the url [http://localhost:9443/swagger/index.html](http://localhost:9443/swagger/index.html).
+Open internet browser and navigate to the url [http://localhost:8090/swagger/index.html](http://localhost:8090/swagger/index.html).
 View and Call APIs on the page of swagger UI.
 
 ### Update OpenAPI documentation
