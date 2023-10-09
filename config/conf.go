@@ -43,7 +43,7 @@ type sectionSSL struct {
 var defaultConf = []byte(`
 mode: release
 host: "localhost" # ip address to bind (default: any)
-port: "9443" # ignore this port number if auto_tls is enabled (listen 443).
+port: "8090" # ignore this port number if auto_tls is enabled (listen 443).
 shutdown_timeout: 30 # default is 30 second
 
 log:
