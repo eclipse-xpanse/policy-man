@@ -33,7 +33,7 @@ type sectionLog struct {
 }
 
 type sectionSSL struct {
-	Enable     bool   `mapstructure:"ssl"`
+	Enable     bool   `mapstructure:"enable"`
 	KeyPath    string `mapstructure:"key_path"`
 	CertPath   string `mapstructure:"cert_path"`
 	KeyBase64  string `mapstructure:"key_base64"`
@@ -43,7 +43,7 @@ type sectionSSL struct {
 var defaultConf = []byte(`
 mode: release
 host: "localhost" # ip address to bind (default: any)
-port: "8090" # ignore this port number if auto_tls is enabled (listen 443).
+port: "8090" # port to bind (default: 8090)
 shutdown_timeout: 30 # default is 30 second
 
 log:
