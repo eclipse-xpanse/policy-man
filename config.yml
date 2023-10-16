@@ -1,0 +1,13 @@
+#mode: release
+#host: "localhost" # ip address to bind (default: any)
+#port: "8090" # port to bind (default: 8090)
+#shutdown_timeout: 30 # default is 30 second
+
+#log:
+#  level: "debug"
+#  path: "stdout"
+
+#ssl:
+#  enable: true
+#  cert_path: localhost.pem
+#  key_path: localhost-key.pem

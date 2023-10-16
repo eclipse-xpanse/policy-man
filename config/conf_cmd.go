@@ -31,7 +31,7 @@ var RootCmd = &cobra.Command{
 func init() {
 	RootCmd.Flags().StringP("mode", "m", "release", "The mode of the HTTP server.[release/debug/test]")
 
-	RootCmd.Flags().StringP("config", "c", "", "config file (default is ./config.yaml)")
+	RootCmd.Flags().StringP("config", "c", "", "config file (default is ./config.yml)")
 
 	RootCmd.Flags().StringP("host", "a", "", "The host of the HTTP server")
 	RootCmd.Flags().StringP("port", "p", "", "The port of the HTTP server")
