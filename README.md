@@ -34,12 +34,14 @@ Usage:
   policy-man [flags]
 
 Flags:
-  -c, --config string      config file (default is ./config.yaml)
+  -c, --config string      Specify the config file
   -h, --help               help for policy-man
-  -a, --host string        The host of the HTTP server
-      --log.level string   The level of the log (default "warn")
+  -a, --host string        The host of the HTTP server (default "localhost")
+      --log.level string   The level of the log (default "info")
       --log.path string    The path of the log (default "stdout")
-  -p, --port string        The port of the HTTP server
+  -m, --mode string        The mode of the HTTP server.[release/debug/test] (default "release")
+  -p, --port string        The port of the HTTP server (default "8090")
+  -v, --version            Show the version number
 ```
 
 ### Evaluate the input by a policy list
@@ -71,10 +73,7 @@ All files of the RESTful API documentation are in the directory [./openapi/docs]
 or API annotations are updated, these files should be updated by the following commands:
 
 ```shell
-go get -u github.com/swaggo/swag/cmd/swag
-go install github.com/swaggo/swag/cmd/swag
-swag fmt
-swag init --parseDependency --parseInternal -o ./openapi/docs
+make api_doc
 ```
 
 All the above commands are written to the file [Makefile](./Makefile), You can also use commands in the chapter
