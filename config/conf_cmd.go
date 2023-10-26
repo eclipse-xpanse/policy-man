@@ -6,7 +6,6 @@
 package config
 
 import (
-	"fmt"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -24,19 +23,20 @@ var RootCmd = &cobra.Command{
 	Use:  "policy-man",
 	Long: Logo,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Print(Logo)
 	},
 }
 
 func init() {
 	RootCmd.Flags().StringP("mode", "m", "release", "The mode of the HTTP server.[release/debug/test]")
 
-	RootCmd.Flags().StringP("config", "c", "", "config file (default is ./config.yml)")
+	RootCmd.Flags().BoolP("version", "v", false, "Show the version number")
 
-	RootCmd.Flags().StringP("host", "a", "", "The host of the HTTP server")
-	RootCmd.Flags().StringP("port", "p", "", "The port of the HTTP server")
+	RootCmd.Flags().StringP("config", "c", "", "Specify the config file")
 
-	RootCmd.Flags().String("log.level", "warn", "The level of the log")
+	RootCmd.Flags().StringP("host", "a", "localhost", "The host of the HTTP server")
+	RootCmd.Flags().StringP("port", "p", "8090", "The port of the HTTP server")
+
+	RootCmd.Flags().String("log.level", "info", "The level of the log")
 	RootCmd.Flags().String("log.path", "stdout", "The path of the log")
 
 	err := viper.BindPFlags(RootCmd.Flags())

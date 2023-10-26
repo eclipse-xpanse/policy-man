@@ -27,15 +27,22 @@ func main() {
 		return
 	}
 
+	if isFlagPassed("version") {
+		fmt.Println(version)
+		return
+	}
+
+	if isFlagPassed("help") {
+		return
+	}
+
+	fmt.Print(config.Logo)
+
 	if err = log.InitLog(cfg.Log.Level, cfg.Log.Path); err != nil {
 		return
 	}
 
 	ctx := context.Background()
-
-	if isFlagPassed("help") {
-		return
-	}
 
 	go func() {
 		err := server.RunHTTPServer(ctx, cfg)

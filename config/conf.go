@@ -8,7 +8,6 @@ package config
 import (
 	"bytes"
 	"errors"
-	"fmt"
 	"github.com/eclipse-xpanse/policy-man/log"
 	"github.com/spf13/viper"
 	"os"
@@ -80,11 +79,11 @@ func LoadConf() (*Conf, error) {
 		viper.SetConfigName("config")
 
 		// If a config file is found, read it in.
-		if err := viper.ReadInConfig(); err == nil {
-			fmt.Println("Using config file:", viper.ConfigFileUsed())
-		} else if err := viper.ReadConfig(bytes.NewBuffer(defaultConf)); err != nil {
-			// load default config
-			return conf, err
+		if err := viper.ReadInConfig(); err != nil {
+			if err := viper.ReadConfig(bytes.NewBuffer(defaultConf)); err != nil {
+				// load default config
+				return conf, err
+			}
 		}
 	}
 
