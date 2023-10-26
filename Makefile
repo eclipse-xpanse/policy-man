@@ -41,7 +41,7 @@ lint:
 swag_install:
 	$(GO) get -u github.com/swaggo/swag/cmd/swag;go install github.com/swaggo/swag/cmd/swag
 
-doc: swag_install
+api_doc: swag_install
 	$(SWAG) fmt;$(SWAG) init --parseDependency --parseInternal -o ./openapi/docs
 
 clean:
