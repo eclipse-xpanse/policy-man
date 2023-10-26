@@ -7,3 +7,25 @@ release:
   #
   # Since: v1.11
   replace_existing_draft: true
+# .goreleaser.yml
+changelog:
+  # Changelog generation implementation to use.
+  #
+  # Valid options are:
+  # - `git`: uses `git log`;
+  # - `github`: uses the compare GitHub API, appending the author login to the changelog.
+  # - `gitlab`: uses the compare GitLab API, appending the author name and email to the changelog.
+  # - `github-native`: uses the GitHub release notes generation API, disables the groups feature.
+  #
+  # Default: 'git'
+  # use: github
+
+  filters:
+    # Commit messages matching the regexp listed here will be removed from
+    # the changelog
+    #
+    # Matches are performed against the first line of the commit message only,
+    # prefixed with the commit SHA1, usually in the form of
+    # `<abbrev-commit>[:] <title-commit>`.
+    exclude:
+      - "Merge pull request"
