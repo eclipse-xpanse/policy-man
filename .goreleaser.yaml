@@ -1,0 +1,9 @@
+# .goreleaser.yaml
+release:
+  # Whether to remove existing draft releases with the same name before creating
+  # a new one.
+  # Only effective if `draft` is set to true.
+  # Available only for GitHub.
+  #
+  # Since: v1.11
+  replace_existing_draft: true
