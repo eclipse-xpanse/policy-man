@@ -5,7 +5,7 @@ go 1.21
 require (
 	github.com/gin-contrib/logger v0.2.6
 	github.com/gin-gonic/gin v1.9.1
-	github.com/mattn/go-isatty v0.0.19
+	github.com/mattn/go-isatty v0.0.20
 	github.com/open-policy-agent/opa v0.56.0
 	github.com/sirupsen/logrus v1.9.3
 	github.com/spf13/cobra v1.7.0
