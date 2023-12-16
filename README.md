@@ -78,3 +78,7 @@ make api_doc
 
 All the above commands are written to the file [Makefile](./Makefile), You can also use commands in the chapter
 [Build from source](#Build from source) directly to update these files.
+
+## Dependencies File
+
+All third-party related content is listed in the [DEPENDENCIES](DEPENDENCIES) file.
