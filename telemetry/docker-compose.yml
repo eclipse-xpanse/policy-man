@@ -1,0 +1,52 @@
+version: "3.9"
+
+networks:
+  default:
+    name: policy-man
+    driver: bridge
+
+services:
+  policy-man:
+    depends_on:
+      - jaeger
+    build:
+      context: ../
+      dockerfile: Dockerfile
+    pid: "host"
+    ports:
+      - "8090:8090"
+    volumes:
+      - /proc:/host/proc
+    command: --host=0.0.0.0
+    container_name: policy-man
+  go-auto:
+    depends_on:
+      - policy-man
+    image: ghcr.io/open-telemetry/opentelemetry-go-instrumentation/autoinstrumentation-go:v0.9.0-alpha
+    privileged: true
+    pid: "host"
+    environment:
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4318
+      - OTEL_GO_AUTO_TARGET_EXE=/usr/bin/policy-man
+      - OTEL_GO_AUTO_INCLUDE_DB_STATEMENT=true
+      - OTEL_SERVICE_NAME=policy-man
+      - OTEL_PROPAGATORS=tracecontext,baggage
+      - CGO_ENABLED=1
+    volumes:
+      - /proc:/host/proc
+    container_name: go-auto-instrumentation
+
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    ports:
+      - "16686:16686"
+      - "14268:14268"
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
+      - LOG_LEVEL=debug
+    deploy:
+      resources:
+        limits:
+          memory: 300M
+    restart: unless-stopped
+    container_name: jaeger

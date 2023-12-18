@@ -9,6 +9,7 @@
 </p>
 
 # policy-man
+
 OPA based policy engine.
 
 ## How to use
@@ -20,7 +21,6 @@ make build
 ```
 
 ### Start the policy-man
-
 
 ```shell
 ./policy-man -h
@@ -46,7 +46,7 @@ Flags:
 
 ### Evaluate the input by a policy list
 
-Only `allow` and `deny` will be evaluated. If the variable `allow` be evaluated as false, or the variable `deny` be 
+Only `allow` and `deny` will be evaluated. If the variable `allow` be evaluated as false, or the variable `deny` be
 evaluated as true, The policy will be evaluated as false.
 
 ```shell
@@ -64,7 +64,8 @@ $ curl -X POST http://localhost:8090/evaluate/policies -H 'Content-Type: applica
 
 ### Use Swagger UI
 
-Open internet browser and navigate to the url [http://localhost:8090/swagger/index.html](http://localhost:8090/swagger/index.html).
+Open internet browser and navigate to the
+url [http://localhost:8090/swagger/index.html](http://localhost:8090/swagger/index.html).
 View and Call APIs on the page of swagger UI.
 
 ### Update OpenAPI documentation
@@ -79,6 +80,15 @@ make api_doc
 All the above commands are written to the file [Makefile](./Makefile), You can also use commands in the chapter
 [Build from source](#Build from source) directly to update these files.
 
-## Dependencies File
+### Dependencies File
 
 All third-party related content is listed in the [DEPENDENCIES](DEPENDENCIES) file.
+
+### Telemetry Instrumentation
+
+We can instrument the policy-man with open-telemetry metrics and traces using the auto-instrumentation feature from
+the [open-telemetry project](https://github.com/open-telemetry/opentelemetry-go-instrumentation).
+This automatically generates required data for all HTTP requests.
+
+Sample working example can be found [here](telemetry). The example uses jaeger as OTEL collector but can be used with
+any OTEL based collector. Jager UI can be accessed at http://localhost:16686/ .
