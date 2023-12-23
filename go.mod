@@ -6,7 +6,7 @@ require (
 	github.com/gin-contrib/logger v0.3.0
 	github.com/gin-gonic/gin v1.9.1
 	github.com/mattn/go-isatty v0.0.20
-	github.com/open-policy-agent/opa v0.59.0
+	github.com/open-policy-agent/opa v0.60.0
 	github.com/sirupsen/logrus v1.9.4-0.20230606125235-dd1b4c2e81af
 	github.com/spf13/cobra v1.8.0
 	github.com/spf13/pflag v1.0.5
@@ -44,7 +44,7 @@ require (
 	github.com/go-playground/validator/v10 v10.16.0 // indirect
 	github.com/gobwas/glob v0.2.3 // indirect
 	github.com/goccy/go-json v0.10.2 // indirect
-	github.com/google/uuid v1.4.0 // indirect
+	github.com/google/uuid v1.5.0 // indirect
 	github.com/gorilla/mux v1.8.1 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
