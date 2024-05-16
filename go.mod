@@ -4,7 +4,7 @@ go 1.21
 
 require (
 	github.com/gin-contrib/logger v1.1.2
-	github.com/gin-gonic/gin v1.9.1
+	github.com/gin-gonic/gin v1.10.0
 	github.com/mattn/go-isatty v0.0.20
 	github.com/open-policy-agent/opa v0.64.1
 	github.com/sirupsen/logrus v1.9.4-0.20230606125235-dd1b4c2e81af
@@ -61,7 +61,7 @@ require (
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/olekukonko/tablewriter v0.0.5 // indirect
-	github.com/pelletier/go-toml/v2 v2.2.1 // indirect
+	github.com/pelletier/go-toml/v2 v2.2.2 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/prometheus/client_golang v1.19.0 // indirect
 	github.com/prometheus/client_model v0.6.1 // indirect
@@ -88,14 +88,14 @@ require (
 	go.opentelemetry.io/otel/trace v1.21.0 // indirect
 	go.uber.org/atomic v1.9.0 // indirect
 	go.uber.org/multierr v1.9.0 // indirect
-	golang.org/x/arch v0.7.0 // indirect
-	golang.org/x/crypto v0.22.0 // indirect
+	golang.org/x/arch v0.8.0 // indirect
+	golang.org/x/crypto v0.23.0 // indirect
 	golang.org/x/exp v0.0.0-20230905200255-921286631fa9 // indirect
-	golang.org/x/net v0.24.0 // indirect
-	golang.org/x/sys v0.19.0 // indirect
-	golang.org/x/text v0.14.0 // indirect
+	golang.org/x/net v0.25.0 // indirect
+	golang.org/x/sys v0.20.0 // indirect
+	golang.org/x/text v0.15.0 // indirect
 	golang.org/x/tools v0.15.0 // indirect
-	google.golang.org/protobuf v1.34.0 // indirect
+	google.golang.org/protobuf v1.34.1 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
