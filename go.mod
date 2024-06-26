@@ -1,6 +1,7 @@
 module github.com/eclipse-xpanse/policy-man
 
 go 1.21
+toolchain go1.22.3
 
 require (
 	github.com/gin-contrib/logger v1.1.2
@@ -12,7 +13,7 @@ require (
 	github.com/spf13/pflag v1.0.5
 	github.com/spf13/viper v1.19.0
 	github.com/stretchr/testify v1.9.0
-	github.com/styrainc/regal v0.22.0
+	github.com/styrainc/regal v0.23.1
 	github.com/swaggo/files v1.0.1
 	github.com/swaggo/gin-swagger v1.6.0
 	github.com/swaggo/swag v1.16.3
