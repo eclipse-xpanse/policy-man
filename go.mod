@@ -6,7 +6,7 @@ require (
 	github.com/gin-contrib/logger v1.1.2
 	github.com/gin-gonic/gin v1.10.0
 	github.com/mattn/go-isatty v0.0.20
-	github.com/open-policy-agent/opa v0.67.0
+	github.com/open-policy-agent/opa v0.67.1
 	github.com/sirupsen/logrus v1.9.4-0.20230606125235-dd1b4c2e81af
 	github.com/spf13/cobra v1.8.1
 	github.com/spf13/pflag v1.0.5
