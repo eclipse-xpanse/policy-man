@@ -6,8 +6,8 @@ github.com/OneOfOne/xxhash v1.2.8 h1:31czK/TI9sNkxIKfaUfGlU47BAxQ0ztGgd9vPyqimf8
 github.com/OneOfOne/xxhash v1.2.8/go.mod h1:eZbhyaAYD41SGSSsnmcpxVoRiQ/MPUTjUdIIOT9Um7Q=
 github.com/agnivade/levenshtein v1.2.0 h1:U9L4IOT0Y3i0TIlUIDJ7rVUziKi/zPbrJGaFrtYH3SY=
 github.com/agnivade/levenshtein v1.2.0/go.mod h1:QVVI16kDrtSuwcpd0p1+xMC6Z/VfhtCyDIjcwga4/DU=
-github.com/anderseknert/roast v0.2.0 h1:Hi+noJBe+rLhCzApy8Xo5IE6pkAPBGVFLMJ8EecoghA=
-github.com/anderseknert/roast v0.2.0/go.mod h1:+VbTe/Fj1AUhtafMwz9JBdoPqFCS4rkNwsAhJwMgr1Y=
+github.com/anderseknert/roast v0.4.2 h1:RQLxE2IcqjpXnM/M2qlCrt8bkp6Rg1JCbbTOfjvDxmM=
+github.com/anderseknert/roast v0.4.2/go.mod h1:LJIt906EwHkwKAOePJIY5DUuDumHto0xryuLjR4Nq5A=
 github.com/arbovm/levenshtein v0.0.0-20160628152529-48b4e1c0c4d0 h1:jfIu9sQUG6Ig+0+Ap1h4unLjW6YQJpKZVmUzxsD4E/Q=
 github.com/arbovm/levenshtein v0.0.0-20160628152529-48b4e1c0c4d0/go.mod h1:t2tdKJDJF9BV14lnkjHmOQgcvEKgtqs5a1N3LNdJhGE=
 github.com/beorn7/perks v1.0.1 h1:VlbKKnNfV8bJzeqoa4cOKqO6bYr3WgKZxO8Z16+hsOM=
@@ -235,8 +235,8 @@ github.com/stretchr/testify v1.8.1/go.mod h1:w2LPCIKwWwSfY2zedu0+kehJoqGctiVI29o
 github.com/stretchr/testify v1.8.4/go.mod h1:sz/lmYIOXD/1dqDmKjjqLyZ2RngseejIcXlSw2iwfAo=
 github.com/stretchr/testify v1.9.0 h1:HtqpIVDClZ4nwg75+f6Lvsy/wHu+3BoSGCbBAcpTsTg=
 github.com/stretchr/testify v1.9.0/go.mod h1:r2ic/lqez/lEtzL7wO/rwa5dbSLXVDPFyf8C91i36aY=
-github.com/styrainc/regal v0.27.0 h1:QIgkKK/C8OJ9OeP8Ffy5iqeuTFNaHOwY1tfwaLWrMLc=
-github.com/styrainc/regal v0.27.0/go.mod h1:Xlh28Kg4ztSf8aQDY1KB+Noba3l5iMLtVXKiUIXbZqA=
+github.com/styrainc/regal v0.28.0 h1:R6uOmxYZVR7DnH2Yk4TzzzuLvOxe77nn2SU5ZzpKzIc=
+github.com/styrainc/regal v0.28.0/go.mod h1:qdyQh625znKSWPZHR8snZp3Jlw0VtMC8gtn+DlIGVK4=
 github.com/subosito/gotenv v1.6.0 h1:9NlTDc1FTs4qu0DDq7AEtTPNw6SVm7uBMsUCUjABIf8=
 github.com/subosito/gotenv v1.6.0/go.mod h1:Dk4QP5c2W3ibzajGcXpNraDfq2IrhjMIvMSWPKKo0FU=
 github.com/swaggo/files v1.0.1 h1:J1bVJ4XHZNq0I46UU90611i9/YzdrF7x92oX1ig5IdE=
