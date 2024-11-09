@@ -15,7 +15,7 @@ require (
 	github.com/styrainc/regal v0.28.0
 	github.com/swaggo/files v1.0.1
 	github.com/swaggo/gin-swagger v1.6.0
-	github.com/swaggo/swag v1.16.3
+	github.com/swaggo/swag v1.16.4
 	golang.org/x/sync v0.8.0
 )
 
