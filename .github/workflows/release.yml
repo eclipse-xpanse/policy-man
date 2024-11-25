@@ -93,7 +93,7 @@ jobs:
           password: ${{ secrets.BOT_GITHUB_DOCKER_TOKEN }}
       - name: Extract Docker metadata
         id: meta
-        uses: docker/metadata-action@v5.5.1
+        uses: docker/metadata-action@v5.6.1
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
       - name: Build Docker Image and Push
