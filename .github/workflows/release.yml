@@ -46,7 +46,7 @@ jobs:
           fi
       - name: Set next development version environment variable
         id: new_version
-        uses: christian-draeger/increment-semantic-version@1.1.0
+        uses: christian-draeger/increment-semantic-version@1.2.3
         with:
           current-version: ${{ steps.version.outputs.CurrentVersion }}
           version-fragment: ${{ env.VersionFragment }}
