@@ -14,7 +14,7 @@ import (
 	"github.com/eclipse-xpanse/policy-man/log"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
-	"github.com/open-policy-agent/opa/rego"
+	"github.com/open-policy-agent/opa/v1/rego"
 	"net/http"
 	"runtime/debug"
 )
